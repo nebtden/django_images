@@ -10,6 +10,30 @@ from django.template import loader
 from rest_framework import viewsets
 from .serializers import UserSerializer, GroupSerializer
 
+
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    查看、编辑用户的界面
+    """
+    queryset = User.objects.all().order_by('-date_joined')
+    serializer_class = UserSerializer
+
+
+class GroupViewSet(viewsets.ModelViewSet):
+    """
+    查看、编辑组的界面
+    """
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+
+def test(request):
+    return HttpResponse("tests")
+
+
+
+
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
     # context_object_name = 'latest_question_list'
@@ -27,6 +51,17 @@ class DetailView(generic.DetailView):
 class ResultsView(generic.DetailView):
     model = Question
     template_name = 'polls/results.html'
+
+def show_color(request):
+    if "favorite_color" in request.COOKIES:
+        return HttpResponse("Your favorite color is %s" %             request.COOKIES["favorite_color"])
+    else:
+        return HttpResponse("You don't have a favorite color.")
+
+def test(request):
+    # request.session["fav_color"] = "blue"
+    # print(request.session)
+    return HttpResponse("You don't have a fa    vorite color.")
 
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
@@ -65,8 +100,13 @@ def unruly_passengers_csv(request):
     # Create the HttpResponse object with the appropriate CSV header.
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="somefilename.csv"'
-
+    #
     writer = csv.writer(response)
     writer.writerow(['First row', 'Foo', 'Bar', 'Baz'])
     writer.writerow(['Second row', 'A', 'B', 'C', '"Testing"', "Here's a quote"])
     return response
+
+
+def csv_output(request):
+    response = HttpResponse(content_type='text/csv')
+    # response['Content-Disposition']

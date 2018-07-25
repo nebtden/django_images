@@ -78,6 +78,11 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
+#     'PAGE_SIZE': 10
+# }
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
@@ -111,7 +116,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+# MIDDLEWARE_CLASSES = [
+#     'django.middleware.locale.LocaleMiddleware',
+#     'django.contrib.sessions.middleware.SessionMiddleware',
+# ]
 # Internationalization
 # https://docs.djangoproject.com/en/dev/topics/i18n/
 
